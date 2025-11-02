@@ -1,0 +1,413 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model address1 {
+  id                Int             @id(map: "PK_address1_id") @default(autoincrement())
+  company_id        Int
+  address_th        String?         @db.VarChar(1000)
+  company_id_detail Int?
+  is_parent         Int?
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_address1_company_id")
+}
+
+model address2 {
+  id                Int             @id(map: "PK_address2_id") @default(autoincrement())
+  company_id        Int
+  address_th        String?         @db.VarChar(1000)
+  company_id_detail Int?
+  industry_th_lv5   String?         @db.VarChar(255)
+  industry_en_lv5   String?         @db.VarChar(255)
+  is_parent         Int?
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_address2_company_id")
+}
+
+model auditor {
+  id                     Int             @id(map: "PK_auditor_id") @default(autoincrement())
+  company_id             Int
+  year_fs                Int?
+  financial_asof         DateTime?       @db.DateTime
+  audit_name_th          String?         @db.VarChar(255)
+  audit_name_en          String?         @db.VarChar(255)
+  audit_nof_com_51_49    Int?
+  audit_nof_com_circular Int?
+  rec_status             Int?
+  rec_create_when        DateTime?       @db.DateTime
+  rec_create_by          String?         @db.VarChar(50)
+  rec_update_when        DateTime?       @db.DateTime
+  rec_update_by          String?         @db.VarChar(50)
+  company_profile        company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_auditor_company_id")
+}
+
+model circular {
+  id                Int             @id(map: "PK_circular_id") @default(autoincrement())
+  company_id        Int
+  nof_path          Int?
+  path_id           Int?
+  company_id_detail Int?
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_circular_company_id")
+}
+
+model company_histirical2 {
+  id                  Int             @id(map: "PK_company_histirical2_id") @default(autoincrement())
+  company_id          Int
+  sh_upd_date         DateTime?       @db.DateTime
+  shareholder_name_th String?         @db.VarChar(255)
+  shareholder_name_en String?         @db.VarChar(255)
+  nation_th           String?         @db.VarChar(50)
+  nation_en           String?         @db.VarChar(50)
+  percent_share       Decimal?        @db.Decimal(11, 4)
+  rec_status          Int?
+  rec_create_when     DateTime?       @db.DateTime
+  rec_create_by       String?         @db.VarChar(50)
+  rec_update_when     DateTime?       @db.DateTime
+  rec_update_by       String?         @db.VarChar(50)
+  company_profile     company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_company_histirical2_company_id")
+}
+
+model company_histirical3 {
+  id               Int             @id(map: "PK_company_histirical3_id") @default(autoincrement())
+  company_id       Int
+  sh_upd_date      DateTime?       @db.DateTime
+  bf_pct_th        Decimal?        @db.Decimal(11, 4)
+  bf_pct_fr        Decimal?        @db.Decimal(11, 4)
+  next_sh_upd_date DateTime?       @db.DateTime
+  next_pct_th      Decimal?        @db.Decimal(11, 4)
+  next_pct_fr      Decimal?        @db.Decimal(11, 4)
+  rec_status       Int?
+  rec_create_when  DateTime?       @db.DateTime
+  rec_create_by    String?         @db.VarChar(50)
+  rec_update_when  DateTime?       @db.DateTime
+  rec_update_by    String?         @db.VarChar(50)
+  company_profile  company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_company_histirical3_company_id")
+}
+
+model company_histirical4 {
+  id                   Int             @id(map: "PK_company_histirical4_id") @default(autoincrement())
+  company_id           Int
+  shareholder_upd_date DateTime?       @db.DateTime
+  shareholder_name_th  String?         @db.VarChar(255)
+  shareholder_name_en  String?         @db.VarChar(255)
+  percent_share        Decimal?        @db.Decimal(11, 4)
+  rec_status           Int?
+  rec_create_when      DateTime?       @db.DateTime
+  rec_create_by        String?         @db.VarChar(50)
+  rec_update_when      DateTime?       @db.DateTime
+  rec_update_by        String?         @db.VarChar(50)
+  company_profile      company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_company_histirical4_company_id")
+}
+
+model company_histirical7 {
+  id                  Int             @id(map: "PK_company_histirical7_id") @default(autoincrement())
+  company_id          Int
+  shareholder_name_th String?         @db.VarChar(255)
+  shareholder_name_en String?         @db.VarChar(255)
+  nation_th           String?         @db.VarChar(50)
+  nation_en           String?         @db.VarChar(50)
+  sh_upd_date         DateTime?
+  percent_share       Decimal?        @db.Decimal(11, 4)
+  next_sh_upd_date    DateTime?
+  next_percent_share  Decimal?        @db.Decimal(11, 4)
+  rec_status          Int?
+  rec_create_when     DateTime?
+  rec_create_by       String?         @db.VarChar(50)
+  rec_update_when     DateTime?
+  rec_update_by       String?         @db.VarChar(50)
+  company_profile     company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_company_histirical7_company_id")
+}
+
+model company_profile {
+  company_id          Int                   @id(map: "PK__company___3E2672350F88A0C8")
+  registration_id     String?               @db.VarChar(15)
+  name_en             String?               @db.VarChar(255)
+  name_th             String?               @db.VarChar(255)
+  company_status_th   String?               @db.VarChar(50)
+  company_status_en   String?               @db.VarChar(50)
+  status_date         DateTime?             @db.DateTime
+  rec_status          Int?
+  rec_create_when     DateTime?             @db.DateTime
+  rec_create_by       String?               @db.VarChar(50)
+  rec_update_when     DateTime?             @db.DateTime
+  rec_update_by       String?               @db.VarChar(50)
+  address1            address1[]
+  address2            address2[]
+  auditor             auditor[]
+  circular            circular[]
+  company_histirical2 company_histirical2[]
+  company_histirical3 company_histirical3[]
+  company_histirical4 company_histirical4[]
+  company_histirical7 company_histirical7[]
+  director1           director1[]
+  director4           director4[]
+  director6           director6[]
+  director7           director7[]
+  director8           director8[]
+  indicators          indicators[]
+  Industry_company    Industry_company[]
+  shareholder_s20000  shareholder_s20000[]
+  shareholder_s30000  shareholder_s30000[]
+  shareholder_s50000  shareholder_s50000[]
+  ubo_u10000          ubo_u10000[]
+  ubo_u30000          ubo_u30000[]
+}
+
+model director1 {
+  id                    Int             @id(map: "PK_director1_id") @default(autoincrement())
+  company_id            Int
+  nof_com_same_director Int?
+  director_name_th      String?         @db.VarChar(255)
+  director_name_en      String?         @db.VarChar(255)
+  is_parent             Int?
+  company_id_detail     String?         @db.VarChar(255)
+  rec_status            Int?
+  rec_create_when       DateTime?       @db.DateTime
+  rec_create_by         String?         @db.VarChar(50)
+  rec_update_when       DateTime?       @db.DateTime
+  rec_update_by         String?         @db.VarChar(50)
+  company_profile       company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_director1_company_id")
+}
+
+model director4 {
+  id                         Int             @id(map: "PK_director4_id") @default(autoincrement())
+  company_id                 Int
+  nof_director               Int?
+  nof_fr_director_auth_power Int?
+  director_name_th           String?         @db.VarChar(255)
+  director_name_en           String?         @db.VarChar(255)
+  nation_th                  String?         @db.VarChar(50)
+  nation_en                  String?         @db.VarChar(50)
+  rec_status                 Int?
+  rec_create_when            DateTime?       @db.DateTime
+  rec_create_by              String?         @db.VarChar(50)
+  rec_update_when            DateTime?       @db.DateTime
+  rec_update_by              String?         @db.VarChar(50)
+  company_profile            company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_director4_company_id")
+}
+
+model director6 {
+  id                Int             @id(map: "PK_director6_id") @default(autoincrement())
+  company_id        Int
+  year_focus        Int?
+  nof_com           Int?
+  company_id_detail String?         @db.VarChar(255)
+  regist_date       DateTime?       @db.DateTime
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  regists_date      DateTime?       @db.DateTime
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_director6_company_id")
+}
+
+model director7 {
+  id                Int             @id(map: "PK_director7_id") @default(autoincrement())
+  company_id        Int
+  year_focus        Int?
+  nof_com           Int?
+  company_id_detail String?         @db.VarChar(255)
+  status_date       DateTime?       @db.DateTime
+  company_status_th String?         @db.VarChar(255)
+  company_status_en String?         @db.VarChar(255)
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_director7_company_id")
+}
+
+model director8 {
+  id                Int             @id(map: "PK_director8_id") @default(autoincrement())
+  company_id        Int
+  nof_com           Int?
+  company_id_detail String?         @db.VarChar(255)
+  regist_date       DateTime?       @db.DateTime
+  status_date       DateTime?       @db.DateTime
+  company_status_th String?         @db.VarChar(255)
+  company_status_en String?         @db.VarChar(255)
+  diff_day          Int?
+  rec_status        Int?
+  rec_create_when   DateTime?       @db.DateTime
+  rec_create_by     String?         @db.VarChar(50)
+  rec_update_when   DateTime?       @db.DateTime
+  rec_update_by     String?         @db.VarChar(50)
+  company_profile   company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_director8_company_id")
+}
+
+model indicator_master {
+  indicator_key   String    @id(map: "PK__clarifin__0B6BB3391C15CC8F") @db.VarChar(50)
+  indicator_name  String?   @db.VarChar(255)
+  name_th         String?   @db.VarChar(255)
+  name_en         String?   @db.VarChar(255)
+  rec_status      Int
+  rec_create_when DateTime?
+  rec_create_by   String?   @db.VarChar(50)
+  rec_update_when DateTime?
+  rec_update_by   String?   @db.VarChar(50)
+}
+
+model indicators {
+  id              Int             @id(map: "PK_indicators_id") @default(autoincrement())
+  company_id      Int
+  indicator_key   String?         @db.VarChar(50)
+  indicator_name  String?         @db.VarChar(255)
+  indicator_flag  Int?
+  rec_status      Int?
+  rec_create_when DateTime?       @db.DateTime
+  rec_create_by   String?         @db.VarChar(50)
+  rec_update_when DateTime?       @db.DateTime
+  rec_update_by   String?         @db.VarChar(50)
+  company_profile company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_indicators_company_id")
+}
+
+model Industry_company {
+  id              Int             @id(map: "PK_Industry_company_id") @default(autoincrement())
+  company_id      Int
+  indusrty_th_lv5 String?         @db.VarChar(255)
+  indusrty_en_lv5 String?         @db.VarChar(255)
+  category_i      Int?
+  rec_status      Int?
+  rec_create_when DateTime?       @db.DateTime
+  rec_create_by   String?         @db.VarChar(50)
+  rec_update_when DateTime?       @db.DateTime
+  rec_update_by   String?         @db.VarChar(50)
+  company_profile company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_Industry_company_company_id")
+}
+
+model shareholder_s20000 {
+  id                   Int             @id(map: "PK_shareholder_s20000_id") @default(autoincrement())
+  company_id           Int
+  sh_upd_date          DateTime?       @db.DateTime
+  shareholder_name_th  String?         @db.VarChar(255)
+  shareholder_name_en  String?         @db.VarChar(255)
+  nation_th            String?         @db.VarChar(255)
+  nation_en            String?         @db.VarChar(255)
+  nation               String?         @db.VarChar(255)
+  percent_share        Decimal?        @db.Decimal(11, 4)
+  rec_status           Int?
+  rec_create_when      DateTime?       @db.DateTime
+  rec_create_by        String?         @db.VarChar(50)
+  rec_update_when      DateTime?       @db.DateTime
+  rec_update_by        String?         @db.VarChar(50)
+  shareholder_upd_date DateTime?       @db.DateTime
+  shareholder_type_th  String?         @db.VarChar(255)
+  shareholder_type_en  String?         @db.VarChar(255)
+  shareholder_id       BigInt?
+  company_profile      company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_shareholder_s20000_company_id")
+}
+
+model shareholder_s30000 {
+  id                   Int             @id(map: "PK_shareholder_s30000_id") @default(autoincrement())
+  company_id           Int
+  sh_upd_date          DateTime?       @db.DateTime
+  shareholder_name_th  String?         @db.VarChar(255)
+  shareholder_name_en  String?         @db.VarChar(255)
+  nation_th            String?         @db.VarChar(255)
+  nation_en            String?         @db.VarChar(255)
+  nation               String?         @db.VarChar(255)
+  percent_share        Decimal?        @db.Decimal(11, 4)
+  rec_status           Int?
+  rec_create_when      DateTime?       @db.DateTime
+  rec_create_by        String?         @db.VarChar(50)
+  rec_update_when      DateTime?       @db.DateTime
+  rec_update_by        String?         @db.VarChar(50)
+  shareholder_upd_date DateTime?       @db.DateTime
+  shareholder_type_th  String?         @db.VarChar(255)
+  shareholder_type_en  String?         @db.VarChar(255)
+  shareholder_id       BigInt?
+  company_profile      company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_shareholder_s30000_company_id")
+}
+
+model shareholder_s50000 {
+  id                   Int             @id(map: "PK_shareholder_s50000_id") @default(autoincrement())
+  company_id           Int
+  sh_upd_date          DateTime?       @db.DateTime
+  nation_th            String?         @db.VarChar(50)
+  nation_en            String?         @db.VarChar(50)
+  nof_person           Int?
+  com_nof_shareholder  Int?
+  com_nof_person_th    String?         @db.VarChar(255)
+  com_nof_person_en    String?         @db.VarChar(255)
+  rec_status           Int?
+  rec_create_when      DateTime?       @db.DateTime
+  rec_create_by        String?         @db.VarChar(50)
+  rec_update_when      DateTime?       @db.DateTime
+  rec_update_by        String?         @db.VarChar(50)
+  shareholder_upd_date DateTime?       @db.DateTime
+  nof_shareholder      BigInt?
+  company_profile      company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_shareholder_s50000_company_id")
+}
+
+model ubo_u10000 {
+  id              Int             @id(map: "PK_ubo_u10000_id") @default(autoincrement())
+  company_id      Int
+  ubo_name_th     String?         @db.VarChar(255)
+  ubo_name_en     String?         @db.VarChar(255)
+  nation_th       String?         @db.VarChar(50)
+  nation_en       String?         @db.VarChar(50)
+  percent_ubo     Decimal?        @db.Decimal(11, 4)
+  rec_status      Int?
+  rec_create_when DateTime?       @db.DateTime
+  rec_create_by   String?         @db.VarChar(50)
+  rec_update_when DateTime?       @db.DateTime
+  rec_update_by   String?         @db.VarChar(50)
+  company_profile company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_ubo_u10000_company_id")
+}
+
+model ubo_u30000 {
+  id                   Int             @id(map: "PK_ubo_u30000_id") @default(autoincrement())
+  company_id           Int
+  sh_upd_date          DateTime?       @db.DateTime
+  shareholder_name_th  String?         @db.VarChar(255)
+  shareholder_name_en  String?         @db.VarChar(255)
+  nation_th            String?         @db.VarChar(255)
+  nation_en            String?         @db.VarChar(255)
+  nation               String?         @db.VarChar(255)
+  percent_share        Decimal?        @db.Decimal(11, 4)
+  percent_bo           Decimal?        @db.Decimal(11, 4)
+  diff_bo_direct       Decimal?        @db.Decimal(11, 4)
+  rec_status           Int?
+  rec_create_when      DateTime?       @db.DateTime
+  rec_create_by        String?         @db.VarChar(50)
+  rec_update_when      DateTime?       @db.DateTime
+  rec_update_by        String?         @db.VarChar(50)
+  shareholder_upd_date DateTime?       @db.DateTime
+  percent_ubo          Float?
+  company_profile      company_profile @relation(fields: [company_id], references: [company_id], onUpdate: NoAction, map: "FK_ubo_u30000_company_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model clarifind_indicators {
+  company_id      BigInt?
+  indicator       String?   @db.Text
+  indicator_name  String?   @db.Text
+  indicator_flag  BigInt?
+  rec_status      BigInt?
+  rec_create_when DateTime? @db.DateTime
+  rec_create_by   String?   @db.Text
+  rec_update_when String?   @db.Text
+  rec_update_by   String?   @db.Text
+
+  @@ignore
+}

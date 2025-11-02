@@ -1,0 +1,24 @@
+import { prisma } from "../../config/prisma";
+import { DetailResult } from "../shared/types";
+
+export async function resolve_S30000(company_id: number, skip: number, take: number): Promise<DetailResult> {
+  const [total, rows] = await prisma.$transaction([
+    prisma.shareholder_s30000.count({ where: { company_id } }),
+    prisma.shareholder_s30000.findMany({
+      where: { company_id }, orderBy: [{ sh_upd_date: "desc" }], skip, take,
+      select: { sh_upd_date: true, shareholder_name_th: true, shareholder_name_en: true, nation_th: true, nation_en: true, percent_share: true },
+    }),
+  ]);
+  return {
+    rows,
+    columns: [
+      { key: "sh_upd_date", label: "วันที่อัปเดต" },
+      { key: "shareholder_name_th", label: "ผู้ถือหุ้น (TH)" },
+      { key: "shareholder_name_en", label: "Shareholder (EN)" },
+      { key: "nation_th", label: "สัญชาติ (TH)" },
+      { key: "nation_en", label: "Nationality (EN)" },
+      { key: "percent_share", label: "% ถือหุ้น" },
+    ],
+    pagination: { total, take, skip },
+  };
+}
