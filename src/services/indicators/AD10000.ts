@@ -19,7 +19,7 @@ export async function resolve_AD10000(
     return { rows: [], columns: cols, pagination: { total: 0, take, skip } };
   }
 
-  // หา company อื่นที่มีที่อยู่ซ้ำในทั้ง address1/address2
+  
   const [a1, a2] = await Promise.all([
     prisma.address1.findMany({
       where: { address_th: { in: target }, company_id: { not: company_id } },

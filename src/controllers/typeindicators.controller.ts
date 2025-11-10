@@ -12,7 +12,7 @@ const q = z.object({
 
 export async function indicatorDetails(req: Request, res: Response) {
   const parsed = q.safeParse(req.query);
-  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.issues });
 
   const { registration_id, code, skip, take } = parsed.data;
   const data = await getIndicatorDetails(registration_id, code, skip, take);
@@ -20,3 +20,4 @@ export async function indicatorDetails(req: Request, res: Response) {
 
   res.json({ ...data, meta: { queried_at: new Date().toISOString() } });
 }
+

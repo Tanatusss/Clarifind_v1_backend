@@ -1,12 +1,14 @@
 import { z } from 'zod';
 
 export const querySchema  = z.object({
-  registration_id: z.string()
-    .min(5)
-    .max(15)
+  type: z.enum(["registration-number", "company-name"]).optional(),
+  q: z.string().trim().min(1, "กรุณากรอกคำค้นหา"),
+  limit: z.coerce.number().int().min(1).max(50).default(10).optional(),
+  skip: z.coerce.number().int().min(0).default(0).optional(),
 });
 
-export type IndicatorQuery = z.infer<typeof querySchema >;
+export type ResolveCompanyQuery = z.infer<typeof querySchema >;
+
 
 export const qSummary = z.object({ 
   registration_id: z.string().min(5).max(15) 
